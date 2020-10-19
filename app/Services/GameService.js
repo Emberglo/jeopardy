@@ -45,7 +45,10 @@ class GameService {
   getGame() {
     api.get("random").then(res => {
       ProxyState.games = res.data.map(rawGameData => new Game(rawGameData))
-      ProxyState.value = parseInt(res.data[0].value)
+      if (res.data[0].value == null) { ProxyState.value = 0 }
+      else {
+        ProxyState.value = parseInt(res.data[0].value)
+      }
     }).catch(err => console.error(err))
   }
 
