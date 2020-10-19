@@ -5,10 +5,12 @@ import { api } from "../Services/AxiosService.js"
 class GameService {
 
   correct() {
+    console.log(ProxyState.value);
     ProxyState.score += ProxyState.value
-    document.getElementById('score').innerText = ProxyState.score
     api.get("random").then(res => {
       ProxyState.games = res.data.map(rawGameData => new Game(rawGameData))
+      ProxyState.value = parseInt(res.data[0].value)
+      document.getElementById('score').innerText = ProxyState.score
     }).catch(err => console.error(err))
   }
 
