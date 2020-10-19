@@ -12,6 +12,7 @@ class GameService {
       else { 
         ProxyState.value = parseInt(res.data[0].value)
       }
+      // @ts-ignore
       document.getElementById('score').innerText = ProxyState.score
     }).catch(err => console.error(err))
   }
@@ -24,6 +25,7 @@ class GameService {
       else {
         ProxyState.value = parseInt(res.data[0].value)
       }
+      // @ts-ignore
       document.getElementById('score').innerText = ProxyState.score
     }).catch(err => console.error(err))
   }
