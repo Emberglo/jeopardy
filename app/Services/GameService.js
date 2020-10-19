@@ -5,20 +5,26 @@ import { api } from "../Services/AxiosService.js"
 class GameService {
 
   correct() {
-    console.log(ProxyState.value);
     ProxyState.score += ProxyState.value
     api.get("random").then(res => {
       ProxyState.games = res.data.map(rawGameData => new Game(rawGameData))
-      ProxyState.value = parseInt(res.data[0].value)
+      if (res.data[0].value == null) { ProxyState.value = 0 }
+      else { 
+        ProxyState.value = parseInt(res.data[0].value)
+      }
       document.getElementById('score').innerText = ProxyState.score
     }).catch(err => console.error(err))
   }
 
   wrong() {
     ProxyState.score -= ProxyState.value
-    document.getElementById('score').innerText = ProxyState.score
     api.get("random").then(res => {
       ProxyState.games = res.data.map(rawGameData => new Game(rawGameData))
+      if (res.data[0].value == null) { ProxyState.value = 0 }
+      else {
+        ProxyState.value = parseInt(res.data[0].value)
+      }
+      document.getElementById('score').innerText = ProxyState.score
     }).catch(err => console.error(err))
   }
 
@@ -36,7 +42,6 @@ class GameService {
 
   getGame() {
     api.get("random").then(res => {
-      console.log(res.data);
       ProxyState.games = res.data.map(rawGameData => new Game(rawGameData))
       ProxyState.value = parseInt(res.data[0].value)
     }).catch(err => console.error(err))
